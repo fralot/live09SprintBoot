@@ -4,6 +4,9 @@ on:
   push:
     branches: ["main"]
 
+env:
+    IMAGE_NAME: live09-dev
+    AZURE_WEBAPP_NAME: fiap-live09-dev
 jobs:
     build:
           runs-on: ubuntu-latest
@@ -26,20 +29,15 @@ jobs:
                 uses: docker/build-push-action@v6
                 with:
                   push: true
-                  tags: index.docker.io/${{ secrets.DOCKERHUB_USERNAME }}/live09-dev:${{ github.sha }}
-                  file: ./Dockerfile
+                  tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest
     deploy:
         runs-on: ubuntu-latest
         needs: build
-        environment:
-          name: production
-          url: ${{ steps.deploy-to-webapp-outputs.webapp-url }}
         steps:
           - name: Deploy to Azure Web App
             id: deploy-to-webapp
             uses: azure/webapps-deploy@v2
             with:
-              app-name: 'fiap-live09-dev'
-              slot-name: 'production'
-              publish-profile: ${{ secrets.AZURE_PROFILE }}
-              images: 'index.docker.io/${{ secrets.DOCKERHUB_USERNAME }}/live09-dev:${{ github.sha }}'
+              app-name: ${{ env.AZURE_WEBAPP_NAME }}
+              publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+              images: '${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest'
