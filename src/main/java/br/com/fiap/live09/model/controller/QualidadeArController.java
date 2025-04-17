@@ -16,7 +16,7 @@ import java.util.List;
 public class QualidadeArController {
 
     @Autowired
-    private QualidadeArService qualidadeArService;
+    public QualidadeArService qualidadeArService;
 
 
     @GetMapping
