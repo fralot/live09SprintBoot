@@ -37,6 +37,7 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET, "/qualidade-ar/**").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/health").permitAll()
                                 // Exigir autenticação para POST, DELETE e PUT
                                 .requestMatchers(HttpMethod.POST, "/qualidade-ar/**").hasRole("ADMIN")
                                 .requestMatchers(HttpMethod.DELETE, "/qualidade-ar/**").hasRole("ADMIN")
