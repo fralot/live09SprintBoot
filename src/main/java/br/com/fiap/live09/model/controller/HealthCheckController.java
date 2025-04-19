@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 
 
 @RestController
-@RequestMapping("/health")
+@RequestMapping("/")
 public class HealthCheckController {
 
     @GetMapping
